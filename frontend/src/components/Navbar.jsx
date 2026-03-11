@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Menu, X, Upload } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Menu, X, Upload } from "lucide-react";
 import { Button } from "./ui/button";
 import { cn } from "../lib/utils";
+import CipherSendLogo from "./CipherSendLogo";
 
 const navLinks = [
   { label: "Home", to: "/" },
@@ -24,8 +25,8 @@ export default function Navbar() {
           className="flex items-center gap-2.5"
           aria-label="CipherSend home"
         >
-          <div className="rounded-lg bg-primary/10 p-1.5 glow-green">
-            <Shield className="h-5 w-5 text-primary" />
+          <div className="rounded-lg bg-primary/10 p-1 glow-green">
+            <CipherSendLogo size={28} />
           </div>
           <span className="text-lg font-bold tracking-tight">
             Cipher

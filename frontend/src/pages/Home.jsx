@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Shield, Lock, Link2, FileCheck, Clock, Github, BookOpen, FileText } from "lucide-react";
 import { Button } from "../components/ui/button";
+import CipherSendLogo from "../components/CipherSendLogo";
 
 const features = [
   {
@@ -57,6 +58,13 @@ export default function Home() {
           transition={{ duration: 0.7, ease: "easeOut" }}
           className="relative z-10 max-w-3xl space-y-6"
         >
+          {/* Logo mark */}
+          <div className="flex justify-center">
+            <div className="rounded-2xl bg-primary/10 p-4 glow-green-strong">
+              <CipherSendLogo size={64} />
+            </div>
+          </div>
+
           {/* Badge */}
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-1.5 text-sm text-primary">
             <Shield className="h-4 w-4" />
@@ -139,7 +147,7 @@ export default function Home() {
       <footer className="border-t border-border">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-6 sm:flex-row sm:px-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Shield className="h-4 w-4 text-primary" />
+            <CipherSendLogo size={18} />
             CipherSend · Secure file transfer
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
