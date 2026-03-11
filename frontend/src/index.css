@@ -1,68 +1,70 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 222 47% 3%;
+    --foreground: 214 32% 91%;
+    --card: 217 33% 10%;
+    --card-foreground: 214 32% 91%;
+    --primary: 142 71% 45%;
+    --primary-foreground: 222 47% 3%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 214 32% 91%;
+    --muted: 217 33% 14%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 142 71% 45%;
+    --accent-foreground: 222 47% 3%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+    --warning: 38 92% 50%;
+    --border: 217 33% 17%;
+    --ring: 142 71% 45%;
+    --radius: 0.5rem;
   }
-  a:hover {
-    color: #747bff;
+
+  * {
+    border-color: hsl(var(--border));
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
   }
-  button {
-    background-color: #f9f9f9;
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: Inter, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer utilities {
+  .glow-green {
+    box-shadow: 0 0 20px hsl(142 71% 45% / 0.3);
+  }
+  .glow-green-strong {
+    box-shadow: 0 0 40px hsl(142 71% 45% / 0.4);
+  }
+  .gradient-card {
+    background: linear-gradient(135deg, hsl(217 33% 12%), hsl(217 33% 8%));
+  }
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(142 71% 45%), hsl(160 60% 40%));
+  }
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(142 71% 45%), hsl(160 60% 40%));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .border-glow {
+    border-color: hsl(142 71% 45% / 0.3);
+  }
+  .bg-grid {
+    background-image: linear-gradient(hsl(217 33% 17% / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(217 33% 17% / 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 }
