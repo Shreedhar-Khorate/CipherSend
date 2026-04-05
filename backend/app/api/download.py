@@ -8,6 +8,7 @@ from slowapi.util import get_remote_address
 
 from app.models.file_model import FileInfoResponse
 from app.services.file_service import download_file, get_file_info
+from app.services.log_service import log_activity
 
 router = APIRouter()
 _limiter = Limiter(key_func=get_remote_address)
@@ -72,12 +73,35 @@ async def download_endpoint(
     Pass the optional file password via the **`X-File-Password`** request header.
     """
     _validate_file_id(file_id)
-    filename, file_bytes = download_file(file_id, x_file_password)
-    return Response(
-        content=file_bytes,
-        media_type="application/octet-stream",
-        headers={
-            "Content-Disposition": f'attachment; filename="{filename}"',
-            "Content-Length": str(len(file_bytes)),
-        },
-    )
+    try:
+        filename, file_bytes = download_file(file_id, x_file_password)
+        
+        # Log successful download
+        log_activity(
+            file_id=file_id,
+            event_type='download',
+            status='success',
+            ip_address=request.client.host if request.client else None,
+            user_agent=request.headers.get('user-agent', 'unknown'),
+            attempt_count=1
+        )
+        
+        return Response(
+            content=file_bytes,
+            media_type="application/octet-stream",
+            headers={
+                "Content-Disposition": f'attachment; filename="{filename}"',
+                "Content-Length": str(len(file_bytes)),
+            },
+        )
+    except Exception as e:
+        # Log failed download attempt
+        log_activity(
+            file_id=file_id,
+            event_type='failed_attempt',
+            status='failed',
+            ip_address=request.client.host if request.client else None,
+            user_agent=request.headers.get('user-agent', 'unknown'),
+            attempt_count=1
+        )
+        raise e

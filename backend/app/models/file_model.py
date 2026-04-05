@@ -13,6 +13,7 @@ class FileRecord(BaseModel):
     file_size: int
     hash_sha256: str
     password_hash: Optional[str] = None
+    encryption_key: Optional[str] = None
     download_limit: int
     downloads: int
     expiry_time: datetime

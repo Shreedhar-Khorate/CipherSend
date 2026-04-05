@@ -1,15 +1,14 @@
-import { useState } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle2, Link2, Mail, QrCode } from "lucide-react";
 import { Button } from "../components/ui/button";
 import CopyLinkButton from "../components/CopyLinkButton";
 import SecurityBadge from "../components/SecurityBadge";
+import QRCodeGenerator from "../components/QRCodeGenerator";
 
 export default function Share() {
   const { fileId } = useParams();
   const { state } = useLocation();
-  const [showQR, setShowQR] = useState(false);
 
   const shareLink = `${window.location.origin}/download/${fileId}`;
   const fileName = state?.fileName ?? "uploaded-file";
@@ -82,31 +81,12 @@ export default function Share() {
                 <Mail className="h-4 w-4 mr-1.5" />
                 Email
               </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowQR((v) => !v)}
-                aria-label="Toggle QR code"
-              >
-                <QrCode className="h-4 w-4 mr-1.5" />
-                QR Code
-              </Button>
+              <div className="inline-flex">
+                <QRCodeGenerator shareLink={shareLink} fileName={fileName} />
+              </div>
             </div>
 
-            {/* QR Code panel */}
-            {showQR && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="rounded-xl border border-border bg-card p-6 flex flex-col items-center gap-3"
-              >
-                <QrCode className="h-24 w-24 text-primary opacity-60" />
-                <p className="text-xs text-muted-foreground">
-                  QR Code generation requires a QR library integration.
-                </p>
-              </motion.div>
-            )}
+            {/* QR Code generator modal is handled by QRCodeGenerator component */}
 
             {/* Security badges */}
             <div className="flex flex-wrap justify-center gap-2">

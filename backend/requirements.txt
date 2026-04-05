@@ -4,7 +4,7 @@ python-multipart
 python-dotenv
 pydantic
 pydantic-settings
-passlib[bcrypt]
+bcrypt>=4.0.0
 pycryptodome
 supabase
 slowapi

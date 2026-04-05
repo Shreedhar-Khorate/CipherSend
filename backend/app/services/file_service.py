@@ -1,4 +1,5 @@
 import uuid
+import secrets
 from datetime import datetime, timedelta, timezone
 from typing import Optional, Tuple
 
@@ -100,21 +101,31 @@ def upload_file(
     hours = expiry_hours if expiry_hours is not None else settings.default_expiry_hours
     limit = download_limit if download_limit is not None else settings.max_download_limit
     expiry_time = datetime.now(timezone.utc) + timedelta(hours=hours)
+    created_at = datetime.now(timezone.utc)
+    encryption_key = secrets.token_hex(32)  # Generate unique 64-char encryption key per file
 
     # 7 – Persist
-    _db().table("files").insert(
-        {
-            "id": file_id,
-            "file_name": filename,
-            "storage_path": storage_path,
-            "file_size": len(file_bytes),
-            "hash_sha256": sha256,
-            "password_hash": pw_hash,
-            "download_limit": limit,
-            "downloads": 0,
-            "expiry_time": expiry_time.isoformat(),
-        }
-    ).execute()
+    try:
+        response = _db().table("files").insert(
+            {
+                "id": file_id,
+                "file_name": filename,
+                "storage_path": storage_path,
+                "file_size": len(file_bytes),
+                "hash_sha256": sha256,
+                "password_hash": pw_hash,
+                "encryption_key": encryption_key,
+                "download_limit": limit,
+                "downloads": 0,
+                "expiry_time": expiry_time.isoformat(),
+                "created_at": created_at.isoformat(),
+            }
+        ).execute()
+        if not response.data:
+            raise HTTPException(status_code=500, detail="Failed to insert file metadata into database")
+    except Exception as e:
+        # If database insert fails, raise error
+        raise HTTPException(status_code=500, detail=f"Database error: {str(e)}")
 
     return file_id
 

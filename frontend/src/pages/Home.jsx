@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Shield, Lock, Link2, FileCheck, Clock, Github, BookOpen, FileText } from "lucide-react";
+import { Shield, Lock, Link2, FileCheck, Clock, Github, BookOpen, FileText, QrCode } from "lucide-react";
 import { Button } from "../components/ui/button";
 import CipherSendLogo from "../components/CipherSendLogo";
+import QRCodeScanner from "../components/QRCodeScanner";
 
 const features = [
   {
@@ -35,9 +36,29 @@ const features = [
 export default function Home() {
   const navigate = useNavigate();
   const featuresRef = useRef(null);
+  const [showQRScanner, setShowQRScanner] = useState(false);
 
   const scrollToFeatures = () => {
     featuresRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleQRScan = (qrData) => {
+    setShowQRScanner(false);
+    
+    // Extract file ID from the QR data
+    // QR data should be a URL like: http://localhost:5173/download/file-id
+    try {
+      const url = new URL(qrData);
+      const fileId = url.pathname.split("/").pop();
+      
+      if (fileId) {
+        navigate(`/download/${fileId}`);
+      } else {
+        alert("Invalid QR code. Please try again.");
+      }
+    } catch (err) {
+      alert("Invalid QR code. Please try again.");
+    }
   };
 
   return (
@@ -92,6 +113,16 @@ export default function Home() {
               aria-label="Upload a file"
             >
               Upload File
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="h-12 px-8 text-base"
+              onClick={() => setShowQRScanner(true)}
+              aria-label="Scan QR code"
+            >
+              <QrCode className="h-5 w-5 mr-2" />
+              Scan QR Code
             </Button>
             <Button
               variant="outline"
@@ -180,6 +211,13 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {/* QR Code Scanner Modal */}
+      <QRCodeScanner
+        isOpen={showQRScanner}
+        onClose={() => setShowQRScanner(false)}
+        onScan={handleQRScan}
+      />
     </div>
   );
 }

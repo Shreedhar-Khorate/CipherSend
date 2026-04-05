@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     # Supabase
     supabase_url: str
     supabase_key: str
+    supabase_storage_bucket: str = "encrypted-files"
 
     # Encryption
     aes_secret_key: str
@@ -23,6 +24,11 @@ class Settings(BaseSettings):
     # App
     app_name: str = "CipherSend API"
     environment: str = "development"
+    debug: bool = False
+    base_url: str = "http://localhost:8000"
+    api_prefix: str = "/api/v1"
+    allowed_origins: str = "http://localhost:5173,http://localhost:3000"
+    log_level: str = "INFO"
 
     model_config = SettingsConfigDict(
         env_file=".env",
