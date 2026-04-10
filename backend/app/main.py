@@ -7,7 +7,7 @@ from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.errors import RateLimitExceeded
 from slowapi.util import get_remote_address
 
-from app.api import download, health, upload, verify, files
+from app.api import charts, download, health, upload, verify, files
 from app.core.config import get_settings
 
 # ── Startup / shutdown ────────────────────────────────────────────────────────
@@ -78,3 +78,4 @@ app.include_router(upload.router,   prefix=PREFIX, tags=["Upload"])
 app.include_router(download.router, prefix=PREFIX, tags=["Download"])
 app.include_router(verify.router,   prefix=PREFIX, tags=["Verify"])
 app.include_router(files.router,    prefix=PREFIX, tags=["Files"])
+app.include_router(charts.router,   prefix=PREFIX, tags=["Charts"])

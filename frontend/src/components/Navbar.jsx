@@ -9,6 +9,7 @@ import CipherSendLogo from "./CipherSendLogo";
 const navLinks = [
   { label: "Home", to: "/" },
   { label: "Upload", to: "/upload" },
+  { label: "Analytics", to: "/analytics" },
 ];
 
 export default function Navbar() {

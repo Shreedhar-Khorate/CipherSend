@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Upload from "./pages/Upload";
 import Share from "./pages/Share";
 import Download from "./pages/Download";
+import Analytics from "./pages/Analytics";
 import ErrorPage from "./pages/Error";
 import NotFound from "./pages/NotFound";
 
@@ -17,6 +18,7 @@ function App() {
         <Route path="/upload" element={<Upload />} />
         <Route path="/share/:fileId" element={<Share />} />
         <Route path="/download/:fileId" element={<Download />} />
+        <Route path="/analytics" element={<Analytics />} />
         <Route path="/error" element={<ErrorPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
