@@ -318,6 +318,6 @@ This project is informed by current security research and best practices:
 
 ---
 
-## �🙏 Acknowledgments
+## Acknowledgments
 
 Built with modern web technologies and security best practices.
