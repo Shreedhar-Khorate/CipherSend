@@ -310,7 +310,7 @@ For questions, bug reports, or feature requests, please open an issue on GitHub.
 
 ---
 
-## � Research & References
+## Research & References
 
 This project is informed by current security research and best practices:
 
